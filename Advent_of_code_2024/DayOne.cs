@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Advent_of_code_2024
 {
@@ -10,91 +12,87 @@ namespace Advent_of_code_2024
     {
         internal static void RunDayOne()
         {
-            Console.WriteLine("Welcome to day one. This first puzzle requires matching numbers between two lists.");
-            Console.WriteLine("We want to compare the smallest number on the left list with the smallest number on the right.");
-            Console.WriteLine("The distance between the numbers will be remembered, and at the end we sum the total distance.\n");
-
-            // Input and validation for both lists
-            int[] leftListInt = GetValidatedInput("Please enter the numbers for the left list separated by a comma:");
-            int[] rightListInt = GetValidatedInput("Please enter the numbers for the right list separated by a comma:");
-
-            // Calculate total distance
-            int totalDistance = CalculateTotalDistance(leftListInt, rightListInt);
-
-            Console.WriteLine($"The total distance between the smallest numbers in the two lists is: {totalDistance}");
-            Console.WriteLine("Press any button to return to the main menu.");
-            Console.ReadKey();
-            Console.Clear();
-            AdventOfCodeMenu.RunMenu();
-        }
-
-        private static int GetValidatedInput(string prompt)
-        {
-            while (true)
+            Console.WriteLine("Choose which of the following do you want to do:");
+            Console.WriteLine("(1) - Part 1");
+            Console.WriteLine("(2) - Part 2");
+            Console.WriteLine("(9) - Return to main menu");
+            
+            switch (Console.ReadLine())
             {
-                Console.WriteLine(prompt);
-                string input = Console.ReadLine();
-
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("Input cannot be empty. Please try again.");
-                    continue;
-                }
-
-                if (!input.Contains(","))
-                {
-                    Console.WriteLine("Input must contain a comma. Please try again.");
-                    continue;
-                }
-
-                string[] parts = input.Split(",");
-                if (parts.Length < 2)
-                {
-                    Console.WriteLine("Input must contain at least two numbers. Please try again.");
-                    continue;
-                }
-
-                try
-                {
-                    return Array.ConvertAll(parts, int.Parse);
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("All inputs must be valid integers. Please try again.");
-                }
+                case "1":
+                    RunDayOnePartOne();
+                    break;
+                case "2":
+                    RunDayOnePartTwo();
+                    break;
+                case "9":
+                    AdventOfCodeMenu.RunMenu();
+                    break;
+                default:
+                    Console.WriteLine("Invalid input. Please try again.");
+                    RunDayOne();
+                    break;
             }
         }
 
-        private static int CalculateTotalDistance(int[] leftList, int[] rightList)
+        internal static void RunDayOnePartOne()
         {
-            int totalDistance = 0;
+            string textFilePath = @"C:\DevProj\Advent_of_code_2024\Advent_of_code_2024\docs\OneOne.txt";
 
-            while (leftList.Length > 0 && rightList.Length > 0)
+            if (!File.Exists(textFilePath))
             {
-                int leftMin = leftList.Min();
-                int rightMin = rightList.Min();
+                Console.WriteLine($"File not found: {textFilePath}");
+                Console.WriteLine("Returning to the main menu. Press any key:");
+                Console.ReadKey();
+                AdventOfCodeMenu.RunMenu();
+                return;
+            }
 
-                int leftIndex = Array.IndexOf(leftList, leftMin);
-                int rightIndex = Array.IndexOf(rightList, rightMin);
+            string[] readText = File.ReadAllLines(textFilePath);
 
-                totalDistance += Math.Abs(leftIndex - rightIndex);
+            Console.WriteLine("Processing file...");
+            int totalDifference = CalculateTotalDistance(readText);
 
-                // Remove the smallest numbers to avoid duplicates
-                leftList = RemoveAtIndex(leftList, leftIndex);
-                rightList = RemoveAtIndex(rightList, rightIndex);
+            Console.WriteLine($"The total difference is: {totalDifference}");
+            Console.WriteLine("Returning to the main menu. Press any key:");
+            Console.ReadKey();
+            RunDayOne();
+        }
+
+        private static int CalculateTotalDistance(string[] lines)
+        {
+            List<int> leftNumbers = new List<int>();
+            List<int> rightNumbers = new List<int>();
+
+            foreach (string line in lines)
+            {
+                string[] numbers = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+                if (numbers.Length == 2)
+                {
+                    leftNumbers.Add(int.Parse(numbers[0]));
+                    rightNumbers.Add(int.Parse(numbers[1]));
+                }
+            }
+
+            leftNumbers.Sort();
+            rightNumbers.Sort();
+
+            int totalDistance = 0;
+            for (int i = 0; i < leftNumbers.Count; i++)
+            {
+                totalDistance += Math.Abs(leftNumbers[i] - rightNumbers[i]);
             }
 
             return totalDistance;
         }
 
-        private static int[] RemoveAtIndex(int[] array, int index)
+        private static void RunDayOnePartTwo()
         {
-            // Remove the element at the specified index
-            // The _ is a discard variable, which is used to ignore the value at the current index
-            // The lambda expression returns true for all elements except the one at the specified index
-            // This way, the Where method filters out the element at the specified index
-            // The ToArray method is then used to convert the IEnumerable<int> back to an int[]
-            return array.Where((_, i) => i != index).ToArray();
+            Console.WriteLine("To be implemented.");
+            Console.WriteLine("Returning to the main menu. Press any key:");
+            Console.ReadKey();
+            RunDayOne();
         }
     }
 }

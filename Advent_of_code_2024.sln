@@ -1,9 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Advent_of_code_2024", "Advent_of_code_2024\Advent_of_code_2024.csproj", "{536B69B4-AF8F-4FE1-AA39-9115516BE92D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{62D704C1-3C0E-456C-9673-CC367C94C7E0}"
+	ProjectSection(SolutionItems) = preProject
+		Advent_of_code_2024\input.txt = Advent_of_code_2024\input.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
