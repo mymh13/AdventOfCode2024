@@ -12,10 +12,4 @@
     <None Remove="OneOne.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="OneOne.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
 </Project>

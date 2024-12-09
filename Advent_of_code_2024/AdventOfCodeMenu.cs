@@ -16,9 +16,9 @@ namespace Advent_of_code_2024
             Console.Clear();
             Console.WriteLine("Please chose one option from the list below:");
             Console.WriteLine("1: Day one - compare smallest numbers (part 1 and part 2)");
-            Console.WriteLine("2: Day two - or perhaps day two ?? seems every day has two challenges??");
+            Console.WriteLine("2: Day two - yet to be implemented");
 
-            Console.WriteLine("E: Exit the program.");
+            Console.WriteLine("\nE: Exit the program.");
 
             string menuInput = (Console.ReadLine()?.ToUpper()) ?? " ";
 
